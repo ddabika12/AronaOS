@@ -87,7 +87,7 @@ Navigate between:
 
 ##  Tech Stack
 
--  Local LLM (trained model), taken from Mistral-7B for AronaOS and Phi-3-mini for AronaOS: Fragment
+-  Local LLM (trained model, taken from Mistral-7B for AronaOS and Phi-3-mini for AronaOS: Fragment)
 - ️ Frontend: HTML/CSS/JS
 -  Backend: Flask + SQLite
 - ️ UI: PyWebView
