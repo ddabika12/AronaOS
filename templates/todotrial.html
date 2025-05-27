@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/static/todo2.css">
+    <script>
+        function toggleTheme() {
+            let body = document.body;
+            let button = document.getElementById("theme-toggle");
+
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("theme", "light");
+                button.innerText = "☀️ Dark Mode";
+            } else {
+                localStorage.setItem("theme", "dark");
+                button.innerText = "🌙 Light Mode";
+            }
+        }
+
+        function contactUs() {
+            alert("Contact Us feature coming soon!");
+        }
+
+        function openFAQ() {
+            alert("FAQ section is under development!");
+        }
+
+        function exitApp() {
+            window.location.href = "/";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const tasks = document.querySelectorAll(".task");
+
+            tasks.forEach(task => {
+                task.addEventListener("click", function () {
+                    const details = this.nextElementSibling;
+                    if (details && details.classList.contains("task-details")) {
+                        document.querySelectorAll(".task-details").forEach(d => {
+                            if (d !== details) d.classList.remove("active");
+                        });
+                        details.classList.toggle("active");
+                    }
+                });
+            });
+
+            document.querySelectorAll(".close-task-btn").forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.stopPropagation();
+                    this.closest(".task-details").classList.remove("active");
+                });
+            });
+
+            document.querySelectorAll(".edit-task-btn").forEach(button => {
+                button.addEventListener("click", function () {
+                    const form = this.parentElement.querySelector(".edit-form");
+                    if (form) form.style.display = "block";
+                });
+            });
+
+            document.querySelectorAll(".cancel-edit").forEach(button => {
+                button.addEventListener("click", function () {
+                    const form = this.closest(".edit-form");
+                    if (form) form.style.display = "none";
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo-container">
+                    <a href="/">
+                        <img src="/static/logo_hd.png" alt="AronaOS Logo">
+                    </a>
+                </div>
+                <div id="full-list">
+                    <div class="list-entry">
+                        <span class="list-name">My Tasks</span>
+                        <div class="list-actions">
+                            <button class="edit-btn"><img src="/static/pen.png" alt="Edit"></button>
+                            <button class="delete-btn"><img src="/static/delete.png" alt="Delete"></button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+
+            <div class="sidebar-bottom-buttons">
+                <button id="theme-toggle" onclick="toggleTheme()">
+                    <img src="/static/contrast.png" alt="Light Mode"> Light Mode
+                </button>
+                <button onclick="contactUs()">
+                    <img src="/static/Group.png" alt="Contact Us"> Contact Us
+                </button>
+                <button onclick="openFAQ()">
+                    <img src="/static/enlarge.png" alt="FAQ"> FAQ
+                </button>
+                <button onclick="exitApp()">
+                    <img src="/static/logout.png" alt="Exit"> Exit
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="todo-content">
+            <div class="right-panel">
+                <h1>To-Do List</h1>
+                <button class="sort-btn">⇅ Sort by</button>
+    
+                <form method="POST" class="task-form">
+                    <input type="text" name="title" placeholder="Add a new task..." required>
+                    <button type="submit" aria-label="Add Task">
+                        <img src="/static/send-icon.svg" alt="Add" class="submit-icon">
+                    </button>
+                </form>
+    
+            </div>
+           
+            <ul class="task-list">
+                {% for task in tasks %}
+                <li class="task">
+                    <form method="POST" action="/todo/update/{{ task.id }}" style="display:inline;">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="completed" onchange="this.form.submit()" {% if task.completed %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                        </label>
+                    </form>
+                    <span class="{% if task.completed %}completed{% endif %}">{{ task.task }}</span>
+                </li>
+
+                <!-- Task Details -->
+                <div class="task-details">
+                    <h3>Task: {{ task.task }}</h3>
+                    <p><strong>Description:</strong> {{ task.description or "No description available" }}</p>
+                    <p><strong>Deadline:</strong> {{ task.deadline or "No deadline set" }}</p>
+                    <p><strong>Priority:</strong> {{ task.priority or "Low" }}</p>
+
+                    <form method="POST" action="/todo/delete/{{ task.id }}">
+                        <button class="delete-task-btn">🗑 Delete</button>
+                    </form>
+                    <button class="edit-task-btn">✏ Edit</button>
+                    <button class="close-task-btn">❌ Close</button>
+
+                    <!-- Inline Edit Form -->
+                    <form class="edit-form" method="POST" action="/todo/edit/{{ task.id }}" style="display: none; margin-top: 1em;">
+                        <input type="text" name="task" value="{{ task.task }}" required><br>
+
+                        <textarea name="description" placeholder="Description">{{ task.description or '' }}</textarea><br>
+
+                        <label>Deadline:</label><br>
+                        <input type="date" name="deadline_date" value="{{ task.deadline.split(' ')[0] if task.deadline else '' }}"><br>
+                        <input type="time" name="deadline_time" value="{{ task.deadline.split(' ')[1] if task.deadline and ' ' in task.deadline else '' }}"><br>
+
+                        <label>Priority:</label><br>
+                        <select name="priority">
+                            <option value="Low" {% if task.priority == 'Low' %}selected{% endif %}>Low</option>
+                            <option value="Medium" {% if task.priority == 'Medium' %}selected{% endif %}>Medium</option>
+                            <option value="High" {% if task.priority == 'High' %}selected{% endif %}>High</option>
+                        </select><br>
+
+                        <button type="submit">✅ Save</button>
+                        <button type="button" class="cancel-edit">Cancel</button>
+                    </form>
+
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

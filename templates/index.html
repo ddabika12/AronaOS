@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/static/home.css">
+</head>
+<body>
+    <div class="logo-container">
+        <img src="/static/logo_hd.png" alt="Logo" class="logo">
+        <div class="button-container">
+            <button onclick="chat()">
+                Go to Chat
+            </button>
+            <button onclick="todo()">
+                To-Do List
+            </button>
+            <button onclick="calendar()">
+                Calendar View
+            </button>
+        </div>
+    </div>
+    <footer>
+        ©2025 by AronaOS team
+    </footer>
+    <script>
+        function chat() {
+            window.location.href = "/chat";
+        }
+
+        function todo() {
+            window.location.href = "/todo";
+        }
+
+        function calendar() {
+            window.location.href = "/calendar";
+        }
+    </script>
+</body>
+</html>

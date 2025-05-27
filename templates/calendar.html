@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Calendar</title>
+
+  <!-- FullCalendar CSS -->
+  <link href="/static/fullcalendar/main.css" rel="stylesheet" />
+  <link href="/static/calendar.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-content">
+      <div class="logo-container">
+        <a href="/"><img src="/static/logo_hd.png" alt="AronaOS Logo" /></a>
+      </div>
+      <button id="new-chat-btn" onclick="chat()">
+        <img src="/static/message.png" alt="New Chat"> To Chat
+      </button>
+      <button id="new-chat-btn" onclick="todo()">
+        <img src="/static/pen.png" alt="New Chat"> To Task List
+      </button>
+    </div>
+    
+
+    <div class="sidebar-bottom-buttons">
+      <button id="theme-toggle" onclick="toggleTheme()">
+        <img src="/static/contrast.png" alt="Light Mode"> Light Mode (WIP)
+      </button>
+      <button onclick="contactUs()">
+        <img src="/static/Group.png" alt="Contact Us"> Contact Us
+      </button>
+      <button onclick="openFAQ()">
+        <img src="/static/enlarge.png" alt="FAQ"> FAQ
+      </button>
+      <button onclick="exitApp()">
+        <img src="/static/logout.png" alt="Exit"> Exit
+      </button>
+    </div>
+  </div>
+
+  <div class="calendar-container">
+    <h1>Task Deadlines</h1>
+    <div id="calendar"></div>
+  </div>
+
+  <!-- FullCalendar JS -->
+  <script src="/static/fullcalendar/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        themeSystem: 'standard',
+        expandRows: true,
+        height: '100%',
+        events: {{ calendar_events|tojson }}
+      });
+
+      calendar.render();
+    });
+
+    function toggleTheme() {
+            let body = document.body;
+            let button = document.getElementById("theme-toggle");
+
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("theme", "light");
+                button.innerText = "☀️ Dark Mode";
+            } else {
+                localStorage.setItem("theme", "dark");
+                button.innerText = "🌙 Light Mode";
+            }
+        }
+
+    function contactUs() {
+      alert("Contact Us feature coming soon!");
+        }
+
+    function openFAQ() {
+      alert("FAQ section is under development!");
+        }
+
+    function exitApp() {
+       window.location.href = "/";
+        }
+    function chat() {
+            window.location.href = "/chat";
+        }
+
+    function todo() {
+            window.location.href = "/todo";
+        }
+
+  </script>
+</body>
+</html>

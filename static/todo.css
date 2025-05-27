@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+:root {
+    --background-color: #1e1e2e;
+    --text-color: #ffffff;
+    --sidebar-color: #222436;
+    --content-box-color: linear-gradient(180deg, #2E3440 0%, #282c34 50%, #1E1E2E 100%);
+    --task-bg: #2e2e3e;
+    --button-bg: #7486A7;
+    --button-hover-bg: #0F89A4;
+}
+
+.light-mode {
+    --background-color: #f0f0ec;
+    --text-color: #000000;
+    --sidebar-color: #f0f0ec;
+    --content-box-color: #e0e0e0;
+    --task-bg: #d0d0d0;
+    --button-bg: #7486A7;
+    --button-hover-bg: #0F89A4;
+}
+
+.light-mode img {
+    filter: invert(1);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Full-height Sidebar */
+.sidebar {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: var(--sidebar-color);
+    padding: 15px;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.sidebar-content {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+
+/* To-Do Content Area */
+.todo-content {
+    margin-left: 270px;
+    width: calc(100% - 300px);
+    background: var(--content-box-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 1.8em;
+    color: var(--text-color);
+}
+
+/* Sorting Button */
+.sort-btn {
+    background-color: var(--button-hover-bg);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100px;
+}
+
+.sort-btn:hover {
+    background-color: var(--button-bg);
+}
+
+/* Task List */
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.task input {
+    margin-right: 12px;
+}
+
+.task span {
+    flex-grow: 1;
+    font-size: 1em;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #888;
+}
+
+/* Add Task Button */
+.add-task-btn {
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-top: 10px;
+    width: fit-content;
+    margin-bottom: 25px;
+}
+
+.add-task-btn:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* Logo Styling */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.logo-container img {
+    width: 150px;
+    height: auto;
+}
+
+/* Sidebar Buttons */
+.sidebar-bottom-buttons button {
+    font-family: 'JetBrains Mono', monospace;
+    width: 100%;
+    background-color: var(--sidebar-color);
+    color: var(--text-color);
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    top: -15px;
+    
+}
+
+.sidebar-bottom-buttons button img {
+    width: 16px;
+    height: 16px;
+}
+
+.sidebar-bottom-buttons button:hover {
+    background-color: #44475a;
+}
+
+.sidebar-bottom-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+/* Chat List */
+#full-list {
+    margin-top: 10px;
+}
+
+/* Chat List */
+.list-entry {
+    background-color: var(--chat-entry-color);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+/* Ensure the actions (edit & delete) are in a horizontal row */
+.list-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Ensure icons inside buttons are aligned and properly sized */
+.list-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.list-actions img {
+    width: 16px;
+    height: 16px;
+}
+
+.list-actions .edit-btn:hover img {
+    opacity: 0.7;
+}
+
+.list-actions .delete-btn:hover img {
+    opacity: 0.7;
+}
+
+.list-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+.list-name {
+    flex-grow: 1;
+}
+
+/* Hide default checkbox */
+.custom-checkbox input {
+    appearance: none;
+    width: 0;
+    height: 0;
+    position: absolute;
+    opacity: 0;
+}
+
+/* Custom Checkbox Design */
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Checkbox Background */
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #0F89A4; /* Border color */
+    border-radius: 5px;
+    display: block;
+    position: relative;
+    background-color: transparent;
+}
+
+/* When checked, change the background */
+.custom-checkbox input:checked + .checkmark {
+    background-color: #0F89A4; /* Checked background */
+    border-color: #0F89A4;
+}
+
+/* Add a checkmark */
+.custom-checkbox input:checked + .checkmark::after {
+    content: "✓";
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AronaOS Chat</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <!-- Sidebar Content -->
+            <div class="sidebar-content">
+                <!-- Logo -->
+                <div class="logo-container">
+                    <a href="/">
+                        <img src="/static/logo_hd.png" alt="AronaOS Logo">
+                    </a>
+                </div>
+            
+                <!-- New Chat Button -->
+                <button id="new-chat-btn" onclick="createNewChat()">
+                    <img src="/static/plus.png" alt="New Chat"> New chat
+                </button>
+            
+                <!-- Recent Chats Section -->
+                <div id="recent-chats">
+                    <div class="chat-entry">
+                        <img src="/static/message.png" class="chat-icon" alt="Chat">
+                        <span class="chat-name" onclick="editChatName(this)">First Chat</span>
+                        <div class="chat-actions">
+                            <button class="edit-btn" onclick="editChatName(this.parentElement.previousElementSibling)">
+                                <img src="/static/pen.png" alt="Edit">
+                            </button>
+                            <button class="delete-btn" onclick="deleteChat(this)">
+                                <img src="/static/delete.png" alt="Delete">
+                            </button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+
+            <!-- Bottom Buttons -->
+            <div class="sidebar-bottom-buttons">
+                <button id="theme-toggle" onclick="toggleTheme()">
+                    <img src="/static/contrast.png" alt="Light Mode"> Light Mode (WIP)
+                </button>
+                <button onclick="contactUs()">
+                    <img src="/static/Group.png" alt="Contact Us"> Contact Us
+                </button>
+                <button onclick="openFAQ()">
+                    <img src="/static/enlarge.png" alt="FAQ"> FAQ
+                </button>
+                <button onclick="exitApp()">
+                    <img src="/static/logout.png" alt="Exit"> Exit
+                </button>
+            </div>
+        </div>        
+        
+        <div class="chat-window">
+            <div id="chat-messages">
+                <!-- Load chat history from the backend -->
+                {% for chat in history %}
+                    <div class="chat-box user-message">{{ chat[1] }}</div>
+                    <div class="chat-box bot-message">{{ chat[2] }}</div>
+                {% endfor %}
+            </div>
+            <div class="input-box">
+                <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+                <button onclick="sendMessage()" id="send-btn">
+                    <img src="/static/send-icon.svg" alt="Send">
+                </button>
+            </div>            
+        </div>
+    </div>
+
+    <script>
+        function handleEnter(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            let input = document.getElementById("chat-input");
+            let chatMessages = document.getElementById("chat-messages");
+
+            if (!input.value.trim()) return;
+
+            let userMessage = document.createElement("div");
+            userMessage.className = "chat-box user-message";
+            userMessage.innerText = input.value;
+            chatMessages.appendChild(userMessage);
+
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: input.value })
+                });
+
+                const data = await response.json();
+                let botMessage = document.createElement("div");
+                botMessage.className = "chat-box bot-message";
+                botMessage.innerText = data.response;
+                chatMessages.appendChild(botMessage);
+
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                console.error("Chat API error:", error);
+            }
+
+            input.value = "";
+        }
+
+        function toggleTheme() {
+            let body = document.body;
+            let button = document.getElementById("theme-toggle");
+
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("theme", "light");
+                button.innerText = "☀️ Dark Mode";
+            } else {
+                localStorage.setItem("theme", "dark");
+                button.innerText = "🌙 Light Mode";
+            }
+        }
+
+        function contactUs() {
+            alert("Contact Us feature coming soon!");
+        }
+
+        function openFAQ() {
+            alert("FAQ section is under development!");
+        }
+
+        function exitApp() {
+            window.location.href = "/";
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            let savedTheme = localStorage.getItem("theme");
+            let button = document.getElementById("theme-toggle");
+
+            if (savedTheme === "light") {
+                document.body.classList.add("light-mode");
+                button.innerText = "☀️ Dark Mode";
+            } else {
+                button.innerText = "🌙 Light Mode";
+            }
+
+            // Scroll to bottom on load
+            const chatBox = document.getElementById("chat-messages");
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    </script>                    
+</body>
+</html>

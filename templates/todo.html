@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/static/todo.css">
+    <script>
+        function toggleTheme() {
+            let body = document.body;
+            let button = document.getElementById("theme-toggle");
+
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                localStorage.setItem("theme", "light");
+                button.innerText = "☀️ Dark Mode";
+            } else {
+                localStorage.setItem("theme", "dark");
+                button.innerText = "🌙 Light Mode";
+            }
+        }
+
+        function contactUs() {
+            alert("Contact Us feature coming soon!");
+        }
+
+        function openFAQ() {
+            alert("FAQ section is under development!");
+        }
+
+        function exitApp() {
+            window.location.href = "/";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="logo-container">
+                    <a href="/">
+                        <img src="/static/logo_hd.png" alt="AronaOS Logo">
+                    </a>
+                </div>
+
+                <div id="full-list">
+                    <div class="list-entry">
+                        <span class="list-name">My Tasks</span>
+                        <div class="list-actions">
+                            <button class="edit-btn">
+                                <img src="/static/pen.png" alt="Edit">
+                            </button>
+                            <button class="delete-btn">
+                                <img src="/static/delete.png" alt="Delete">
+                            </button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+
+            <div class="sidebar-bottom-buttons">
+                <button id="theme-toggle" onclick="toggleTheme()">
+                    <img src="/static/contrast.png" alt="Light Mode"> Light Mode
+                </button>
+                <button onclick="contactUs()">
+                    <img src="/static/Group.png" alt="Contact Us"> Contact Us
+                </button>
+                <button onclick="openFAQ()">
+                    <img src="/static/enlarge.png" alt="FAQ"> FAQ
+                </button>
+                <button onclick="exitApp()">
+                    <img src="/static/logout.png" alt="Exit"> Exit
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="todo-content">
+            <h1>To-Do List</h1>
+
+            <form method="POST" class="task-form">
+                <input type="text" name="title" placeholder="Add a new task..." required>
+                <button type="submit">Add Task</button>
+            </form>
+
+            <ul class="task-list">
+                {% for task in tasks %}
+                <li class="task">
+                    <form method="POST" action="/todo/update/{{ task[0] }}" style="display:inline;">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" name="completed" onchange="this.form.submit()" {% if task[2] %}checked{% endif %}>
+                            <span class="checkmark"></span>
+                        </label>
+                    </form>
+                    <span class="{% if task[2] %}completed{% endif %}">{{ task[1] }}</span>
+                    <form method="POST" action="/todo/delete/{{ task[0] }}" style="display:inline;">
+                        <button class="delete-task">🗑️</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
