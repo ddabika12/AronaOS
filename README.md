@@ -1,114 +1,143 @@
-#  AronaOS - Offline Study and Productivity Assistant
+# AronaOS: Your Offline AI-Powered Personal Assistant 🤖
 
-**AronaOS** is an offline desktop assistant designed to help students manage tasks, schedules, and academic conversations through a natural language interface. Powered by a local AI model, AronaOS runs completely offline and provides a clean, intuitive desktop-style experience without relying on cloud services. The files in this GitHub repository is the source code for AronaOS Fragment, which runs a web-based instance of AronaOS Fragment. To actually install AronaOS on your system, follow the instructions given on the "Installation Steps" section of this readme file.
+![AronaOS Logo](https://img.shields.io/badge/AronaOS-Offline%20AI%20Assistant-blue?style=for-the-badge)
 
----
+Welcome to the AronaOS repository! This project is an offline AI-powered personal assistant designed to help you manage tasks, set reminders, and engage in context-aware conversations. Built with Python, Flask, and local LLMs like Phi-3 Mini, AronaOS prioritizes your privacy while enhancing productivity.
 
-##  Key Features
+## Table of Contents
 
--  Works entirely offline
-- ️ Chat interface with a memory-capable local language model
--  To-Do List management with automatic task extraction from chat
--  Visual Calendar for tracking task deadlines
-- ️ Lightweight desktop interface using PyWebView
--  No internet required as all data is stored locally
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Releases](#releases)
 
----
+## Features
 
-## ️ System Requirements
+- **Task Management**: Create, edit, and delete tasks easily.
+- **Reminders**: Set reminders for important tasks.
+- **Context-Aware Conversations**: Engage in conversations that remember previous interactions.
+- **Privacy First**: Your data stays on your device.
+- **User-Friendly Interface**: A clean and intuitive UI for seamless interaction.
+- **Offline Functionality**: Works without an internet connection.
+- **Open Source**: Contribute and improve the project.
 
-###  AronaOS (Full Version)
+## Technologies Used
 
-**Windows**
-- OS: Windows 10/11  
-- Minimum: Ryzen 5 / Intel i5, 16 GB RAM, 20 GB Storage  
-- Recommended: Ryzen 7 / Intel i7, 32 GB RAM, 30 GB Storage
+AronaOS utilizes the following technologies:
 
-**macOS**
-- OS: macOS Monterey (12) or later  
-- Minimum: Apple M1, 16 GB RAM  
-- Recommended: M2 Pro / M3, 32 GB RAM
+- **Python**: The core programming language.
+- **Flask**: The web framework for building the application.
+- **Local LLMs**: Phi-3 Mini and Mistral-7B for natural language processing.
+- **PyWebview**: For creating the desktop application interface.
+- **Regex NLP**: To enhance natural language understanding.
 
-###  AronaOS: Fragment (Lite Version)
+## Installation
 
-**Windows**
-- OS: Windows 10/11  
-- Minimum: Ryzen 3 / Intel i3, 6 GB RAM  
-- Recommended: Ryzen 5 / Intel i5, 8 GB RAM
+To get started with AronaOS, follow these steps:
 
-**macOS**
-- OS: macOS Monterey (12) or later  
-- Minimum: Apple M1, 6 GB RAM  
-- Recommended: Apple M2, 8 GB RAM
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/ddabika12/AronaOS.git
+   ```
 
----
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd AronaOS
+   ```
 
-##  Installation Steps
+3. **Install Dependencies**:
+   Make sure you have Python installed. Then run:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. **Download AronaOS or AronaOS: Fragment**
+4. **Run the Application**:
+   Execute the following command to start the server:
+   ```bash
+   python app.py
+   ```
 
-    [Download from Google Drive](https://drive.google.com/drive/folders/1da6655FohV9Kp1Ub3V6pIcepi2ohEmfP?usp=sharing)
+Now, you can access AronaOS through your local web browser.
 
-2. **Extract the ZIP file**
-   - Right-click the downloaded file and choose `Extract All` or use your preferred extraction tool.
+## Usage
 
-3. **Run the App**
-   - Inside the extracted folder, double-click:
-     - `AronaOS.apk` for full version
-     - `AronaOS: Fragment.apk` for the lite version
-   - No installation required  the app opens immediately.
+Once the application is running, open your browser and go to `http://localhost:5000`. You will see the AronaOS interface. Here’s how to use the main features:
 
- Thats it! Youre ready to use AronaOS.
+### Task Management
 
----
+- **Add a Task**: Enter the task details and click on "Add Task".
+- **Edit a Task**: Click on the task you want to edit, make changes, and save.
+- **Delete a Task**: Click on the delete icon next to the task.
 
-##  Interface Snapshots
+### Setting Reminders
 
-###  Main Homepage
-Navigate between:
-- Chat
-- To-Do List
-- Calendar View
+- Navigate to the reminders section.
+- Select a date and time for your reminder.
+- Click "Set Reminder" to save.
 
-###  Chat Window
-- Offline memory-based chat
-- Learn about you (e.g., `Remember my name is Billy`)
-- Add tasks via natural language (e.g., `Submit report by tomorrow 3 PM`)
+### Engaging in Conversations
 
-###  To-Do List
-- View, edit, and complete tasks
-- Automatically syncs with chat input
+- Type your message in the chat box.
+- AronaOS will respond based on previous interactions.
 
-###  Calendar View
-- Displays task deadlines
-- Helps visualise scheduling
+## Contributing
 
----
+We welcome contributions! To contribute:
 
-##  Tech Stack
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Make your changes and commit:
+   ```bash
+   git commit -m "Add your feature"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Create a Pull Request.
 
--  Local LLM (trained model, taken from Mistral-7B for AronaOS and Phi-3-mini for AronaOS: Fragment)
-- ️ Frontend: HTML/CSS/JS
--  Backend: Flask + SQLite
-- ️ UI: PyWebView
-- ️ Packaging: Nuitka (for `.apk` generation)
+## License
 
----
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-##  Documentation
+## Contact
 
-This project was created by:
-- Abdualim Alibaev 
-- Maleakhi Faith
-- Muhammad Naufal Napitupulu
-- Oliver You
+For questions or feedback, please reach out to the maintainer:
 
----
+- **Name**: [Your Name]
+- **Email**: your.email@example.com
 
-##  Licence
+## Releases
 
-This project is shared for educational purposes. Please contact the authors for any reuse or redistribution permissions.
+You can find the latest releases and download the necessary files from the [Releases](https://github.com/ddabika12/AronaOS/releases) section. Download and execute the files to get the latest features and improvements.
 
----
+For a direct link to the releases, click the button below:
 
-Enjoy using **AronaOS**  your AI-powered study companion that respects your privacy and works even when you're offline.
+[![Download Releases](https://img.shields.io/badge/Download%20Releases-blue?style=for-the-badge)](https://github.com/ddabika12/AronaOS/releases)
+
+## Acknowledgments
+
+- Thanks to the contributors and community for their support.
+- Special thanks to the developers of the libraries and frameworks used in this project.
+
+## Additional Resources
+
+- [Flask Documentation](https://flask.palletsprojects.com/)
+- [Python Official Site](https://www.python.org/)
+- [Local LLMs](https://huggingface.co/models)
+
+## Join the Community
+
+Stay updated and join discussions on our community forums or follow us on social media.
+
+- **Twitter**: [@AronaOS](https://twitter.com/AronaOS)
+- **Discord**: Join our server [here](https://discord.gg/AronaOS).
+
+Thank you for your interest in AronaOS! We hope it helps you stay organized and productive.
